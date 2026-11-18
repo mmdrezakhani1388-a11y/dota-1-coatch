@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --c-bg: 10 13 20;
+  --c-panel: 16 21 31;
+  --c-card: 22 29 42;
+  --c-line: 45 56 76;
+  --c-ink: 236 230 216;
+  --c-muted: 154 164 182;
+  --c-gold: 204 166 84;
+  --c-bronze: 170 118 64;
+  --c-arcane: 103 180 244;
+  --c-silver: 196 204 216;
+  --c-on-gold: 12 14 20;
+  --c-success: 86 196 140;
+  --c-warning: 236 184 84;
+  --c-danger: 232 104 104;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --c-bg: 244 240 230;
+  --c-panel: 252 249 242;
+  --c-card: 255 255 255;
+  --c-line: 221 212 194;
+  --c-ink: 34 30 26;
+  --c-muted: 98 92 82;
+  --c-gold: 143 103 30;
+  --c-bronze: 125 84 40;
+  --c-arcane: 29 105 176;
+  --c-silver: 88 96 108;
+  --c-on-gold: 255 255 255;
+  --c-success: 22 128 80;
+  --c-warning: 166 108 0;
+  --c-danger: 188 52 52;
+}
+
+body {
+  @apply bg-bg text-ink antialiased;
+  font-family: Inter, Vazirmatn, system-ui, sans-serif;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--c-arcane) / 0.08), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgb(var(--c-gold) / 0.06), transparent 70%);
+  background-attachment: fixed;
+}
+
+:root[dir='rtl'] body {
+  font-family: Vazirmatn, Inter, system-ui, sans-serif;
+}
+
+::selection {
+  background: rgb(var(--c-gold) / 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
