@@ -64,6 +64,7 @@ export const en = {
   'map.towerClickHint': 'Click a tower to toggle its status.',
   'map.heroEmpty': 'Empty — click to assign a hero',
   'map.removeHero': 'Remove hero from this position',
+  'map.editHero': 'Edit hero at this position',
   'map.soloFarm': 'SOLO FARM',
   'map.soloFarmOn': 'Assign SOLO FARM',
   'map.soloFarmOff': 'Remove SOLO FARM',

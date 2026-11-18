@@ -66,6 +66,7 @@ export const fa: Record<MessageKey, string> = {
   'map.towerClickHint': 'روی برج کلیک کنید تا وضعیتش تغییر کند.',
   'map.heroEmpty': 'خالی — برای انتخاب قهرمان کلیک کنید',
   'map.removeHero': 'حذف قهرمان از این جایگاه',
+  'map.editHero': 'ویرایش قهرمان این جایگاه',
   'map.soloFarm': 'فارم انفرادی',
   'map.soloFarmOn': 'تعیین فارم انفرادی',
   'map.soloFarmOff': 'حذف فارم انفرادی',

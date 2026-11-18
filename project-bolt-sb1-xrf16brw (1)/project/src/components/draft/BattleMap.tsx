@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Coins, MapPin, Shield, ShieldOff, Repeat } from 'lucide-react';
+import { Coins, MapPin, Pencil, Shield, ShieldOff } from 'lucide-react';
 import { useGameData } from '@/context/useGameData';
 import { useT } from '@/i18n/useT';
 import { cn } from '@/lib/cn';
@@ -66,6 +66,10 @@ export function BattleMap({ match, onChange }: BattleMapProps) {
   };
 
   const setPosHero = (posId: string, heroId: string | null) => {
+    if (heroId !== null) {
+      const occupiedElsewhere = Object.entries(heroPositions).some(([id, currentHeroId]) => id !== posId && currentHeroId === heroId);
+      if (occupiedElsewhere) return;
+    }
     const nextPositions = { ...heroPositions, [posId]: heroId };
     // Drop farm assignments for heroes no longer placed on the map.
     const placed = new Set(Object.values(nextPositions).filter((id): id is string => id !== null));
@@ -101,6 +105,16 @@ export function BattleMap({ match, onChange }: BattleMapProps) {
       return;
     }
     if (feedback) setFeedback(null);
+    if (heroPositions[posId]) {
+      setSwapPos(posId);
+    } else {
+      setPickerPos(posId);
+    }
+  };
+
+  const editPosition = (posId: string) => {
+    setSwapPos(null);
+    setFeedback(null);
     setPickerPos(posId);
   };
 
@@ -209,6 +223,7 @@ export function BattleMap({ match, onChange }: BattleMapProps) {
               swapActive={swapPos !== null}
               soloFarm={posSoloFarm(pos.id)}
               onClick={() => handlePosClick(pos.id)}
+              onEdit={() => editPosition(pos.id)}
             />
           ))}
         </div>
@@ -328,6 +343,7 @@ function HeroPosMarker({
   swapActive,
   soloFarm,
   onClick,
+  onEdit,
 }: {
   pos: HeroPosDef;
   team: 'ally' | 'enemy';
@@ -337,6 +353,7 @@ function HeroPosMarker({
   swapActive: boolean;
   soloFarm: boolean;
   onClick: () => void;
+  onEdit: () => void;
 }) {
   const t = useT();
 
@@ -382,6 +399,20 @@ function HeroPosMarker({
         >
           {soloFarm ? `${heroName} · ${t('map.soloFarm')}` : heroName}
         </span>
+      )}
+      {heroId && (
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            onEdit();
+          }}
+          className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full border border-line bg-card text-muted transition-colors hover:text-ink"
+          aria-label={`${t('map.editHero')} ${pos.id}`}
+          title={t('map.editHero')}
+        >
+          <Pencil className="h-2.5 w-2.5" />
+        </button>
       )}
       <span className="sr-only">{team}</span>
     </div>
